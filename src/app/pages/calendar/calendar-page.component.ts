@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatchApiProviderService } from './services/match-api-provider.service';
 
 @Component({
     selector: 'app-calendar-page',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
     styleUrls: ['./calendar-page.component.scss']
 })
 export class CalendarPageComponent {
+
+    constructor(
+        private matchApiProvider: MatchApiProviderService
+    ) {
+        this.matchApiProvider.getMatches();
+    }
 
 }

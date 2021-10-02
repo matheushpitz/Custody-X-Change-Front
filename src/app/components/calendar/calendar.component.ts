@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CalendarService } from './services/calendar.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-calendar',
@@ -8,6 +9,8 @@ import { CalendarService } from './services/calendar.service';
     providers: [ CalendarService ]
 })
 export class CalendarComponent {
+
+    public dates$: Observable<Date[]> = this.calendarService.dates$;
 
     constructor(
         private calendarService: CalendarService

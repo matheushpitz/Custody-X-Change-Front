@@ -1,3 +1,5 @@
-<div class="col-12">abc</div>
 <button (click)="next()">Next</button>
 <button (click)="previous()">Previous</button>
+<div class="col-12">
+    <app-calendar-day [date]="date" [showDay]="idx < 7" *ngFor="let date of (dates$ | async); let idx = index;"></app-calendar-day>
+</div>

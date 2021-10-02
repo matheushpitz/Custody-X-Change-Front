@@ -1,7 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateUtils } from 'src/app/utils/date.utils';
+import { ICalendarTranslate } from '../interfaces/calendar-translate.interface';
+import { CalendarTranslateService } from './calendar-translate.service';
 
 @Injectable()
 export class CalendarService implements OnDestroy {
@@ -10,10 +12,19 @@ export class CalendarService implements OnDestroy {
     private _currentDate: BehaviorSubject<Date>;
     private _calendarDates: BehaviorSubject<Date[]>;
 
-    constructor() {
+    public dates$: Observable<Date[]>;
+    public translate: ICalendarTranslate;
+
+    constructor(
+        private _translate: CalendarTranslateService
+    ) {
+        this.translate = _translate;
+
         this._destroy = new Subject();
         this._currentDate = new BehaviorSubject(DateUtils.getCurrentYearMonth());
-        this._calendarDates = new BehaviorSubject([] as Date[]);        
+        this._calendarDates = new BehaviorSubject([] as Date[]);  
+        
+        this.dates$ = this._calendarDates.asObservable();
 
         this._currentDate.pipe(takeUntil(this._destroy.asObservable())).subscribe(this.loadCalendarDays.bind(this));
         this._calendarDates.subscribe(x => console.log(x));
