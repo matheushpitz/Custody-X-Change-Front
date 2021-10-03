@@ -39,11 +39,7 @@ export class CalendarService implements OnDestroy {
         const current = this._currentDate.value;
         current.setMonth(current.getMonth() - 1);
         this._currentDate.next(current);
-    }
-
-    public get currentDate(): Date {
-        return this._currentDate.value;
-    }
+    }    
 
     private loadCalendarDays(d: Date) {
         const beginDate = DateUtils.getFirstDayOfDate(new Date(d));

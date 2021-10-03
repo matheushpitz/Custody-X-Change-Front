@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NumberUtils } from 'src/app/utils/number.utils';
 import { ICalendarEvent } from '../../interfaces/event.interface';
 import { CalendarTranslateService } from '../../services/calendar-translate.service';
@@ -14,13 +14,21 @@ export class CalendarDayComponent {
     @Input('height') height: number;
     @Input('date') date: Date = new Date();
     @Input('showDay') showDay: boolean = false;
-    @Input('events') events: ICalendarEvent[];    
+    @Input('events') events: ICalendarEvent[];
+
+    @ViewChild('calendarDay') calendarDay: ElementRef;
+    @ViewChild('header') header: ElementRef;
 
     constructor(
         private calendarService: CalendarService,
-        private calendarTranslate: CalendarTranslateService
+        private calendarTranslate: CalendarTranslateService,
+        private cdr: ChangeDetectorRef
     ) {
         
+    }
+
+    ngAfterContentChecked() {
+        this.cdr.detectChanges();
     }
 
     public get isToday() {
@@ -31,21 +39,30 @@ export class CalendarDayComponent {
     }
 
     public getDate(): string {
-        if(this.date.getTime() === this.calendarService.currentDate.getTime()) {
-            return `${this.calendarTranslate.getShortMonth(this.date.getMonth())} ${this.date.getDate().toString()}`;
+        let month = '';
+        if(this.date.getDate() === 1) {
+            month = `${this.calendarTranslate.getShortMonth(this.date.getMonth())} `
         }
-        return this.date.getDate().toString();
+        return month + this.date.getDate().toString();
     }
 
     public getDay(): string {        
-        return this.calendarTranslate.getShortDay(this.date.getDay());    
+        return this.calendarTranslate.getShortDay(this.date.getDay()).toUpperCase();    
     }
 
     public getEvents(): ICalendarEvent[] {
-        if(this.events.length > 2) {
-            const e = this.events.slice(0, 2);
+        let maxShownEvents = 1;
+
+        if(this.calendarDay && this.header) {
+            const cDay = this.calendarDay.nativeElement.clientHeight;
+            const h = this.header.nativeElement.clientHeight;
+            maxShownEvents = Math.floor((cDay - h) / 25) - 1;            
+        }
+
+        if(this.events.length > maxShownEvents) {
+            const e = this.events.slice(0, maxShownEvents);
             e.push({
-                title: `${this.events.length - 2} more...`,
+                title: `${this.events.length - maxShownEvents} more...`,
                 date: new Date(this.date)
             });
 

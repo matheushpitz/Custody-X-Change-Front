@@ -1,5 +1,5 @@
-<div class="calendar-day" [ngStyle]="{ 'min-height': height + '%', 'max-height': height + '%' }" [ngClass]="{ 'today': isToday }">
-    <div>
+<div #calendarDay class="calendar-day" [ngStyle]="{ 'min-height': height + '%', 'max-height': height + '%' }" [ngClass]="{ 'today': isToday }">
+    <div #header>
         <span *ngIf="showDay" class="calendar-header-day">{{getDay()}}</span>
         <span class="calendar-date">{{getDate()}}</span>
     </div>    
