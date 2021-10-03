@@ -1,4 +1,9 @@
-<div class="calendar-day">
-    <p *ngIf="showDay">{{getDay()}}</p>
-    <p>{{getDate()}}</p>
+<div class="calendar-day" [ngStyle]="{ 'min-height': height + '%', 'max-height': height + '%' }" [ngClass]="{ 'today': isToday }">
+    <div>
+        <span *ngIf="showDay" class="calendar-header-day">{{getDay()}}</span>
+        <span class="calendar-date">{{getDate()}}</span>
+    </div>    
+    <div class="calendar-events">
+        <app-calendar-event [event]="event" *ngFor="let event of getEvents()"></app-calendar-event>
+    </div>    
 </div>

@@ -1,5 +1,36 @@
 .calendar-day {
     display: inline-block;
-    width: 14.2857%;
+    width: 14.2857%;    
     text-align: center;
+    border: 1px solid #8a8a8a77;
+
+    vertical-align: bottom;
+    cursor: pointer;
+    
+    padding: 5px;
+
+    font-family: Roboto,Arial,sans-serif;
+        font-size: 13px;
+
+    .calendar-header-day {
+        font-weight: bold;
+        display: block;
+    }
+
+    .calendar-events {
+        margin-top: 10px;
+    }    
+}
+
+.today {    
+    border: 2px solid #007bff88;     
+    span.calendar-date {
+        font-size: 15px;
+        font-weight: bold;        
+    }    
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.03);
 }

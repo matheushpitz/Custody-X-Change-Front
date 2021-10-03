@@ -1,0 +1,22 @@
+.calendar-header {
+    text-align: center;
+    min-height: 50px;
+
+    .calendar-header-title {
+        display: inline-block;
+        min-width: 20%;        
+
+        font-size: 2rem;
+        vertical-align: bottom;
+
+        margin-left: 10px;
+        margin-right: 10px;                
+    }
+}
+
+.calendar {
+    padding: 10px;   
+    height: calc(100% - 50px); 
+
+    background-color: white;
+}
