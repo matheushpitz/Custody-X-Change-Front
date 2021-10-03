@@ -1,8 +1,21 @@
-import { ICalendarTranslate } from '../interfaces/calendar-translate.interface';
+import { ICalendarTranslate, CalendarTranslation } from '../interfaces/calendar-translate.interface';
 import { Injectable } from '@angular/core';
+import { NumberUtils } from 'src/app/utils/number.utils';
 
 @Injectable()
-export class CalendarTranslateService implements ICalendarTranslate {    
+export class CalendarTranslateService implements ICalendarTranslate {
+    getTranslation(t: CalendarTranslation): string {
+        switch(t) {
+            case 'more-events':
+                return 'more...';
+            case 'no-events':
+                return 'No events for this day';
+            case 'next':
+                return 'Next';
+            case 'previous':
+                return 'Previous';
+        }
+    }       
     getShortDay(day: number): string {
         switch(day) {
             case 0:
@@ -103,5 +116,8 @@ export class CalendarTranslateService implements ICalendarTranslate {
                 return '';
         }
     }
+    getFullDate(d: Date): string {
+        return `${this.getDay(d.getDay())}, ${NumberUtils.pad(d.getDate(), 2)} ${this.getMonth(d.getMonth())} ${d.getFullYear()}`
+    } 
     
 }

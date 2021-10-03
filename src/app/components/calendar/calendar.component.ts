@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CalendarService } from './services/calendar.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { ICalendarEvent } from './interfaces/event.interface';
 import { CalendarTranslateService } from './services/calendar-translate.service';
 
@@ -17,29 +17,52 @@ export class CalendarComponent {
     public dates$: Observable<Date[]> = this.calendarService.dates$;
     public currentDate$: Observable<Date> = this.calendarService.currentDate$;
 
+    private _modal: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    public modal$: Observable<boolean> = this._modal.asObservable();
+
+    public detailedDate: Date;
+
     constructor(
         private calendarService: CalendarService,
         private calendarTranslate: CalendarTranslateService
     ) {}
 
-    next() {
+    public next() {
         this.calendarService.nextMonth();
     }
 
-    previous() {
+    public previous() {
         this.calendarService.previousMonth();
     }
 
-    getTitle(d: Date): string {
+    public get nextText(): string {
+        return this.calendarTranslate.getTranslation('next');
+    }
+
+    public get previousText(): string {
+        return this.calendarTranslate.getTranslation('previous');
+    }
+
+    public getTitle(d: Date): string {
         return `${this.calendarTranslate.getMonth(d.getMonth())} - ${d.getFullYear()}`;
     }
 
-    getEventsByDate(d: Date): ICalendarEvent[] {        
+    public getEventsByDate(d: Date): ICalendarEvent[] {        
         if(this.events) {            
             return this.events.filter(x => x.date.getTime() === d.getTime());
         }
 
         return [];
+    }
+
+    public click(d: Date) {
+        this.detailedDate = d;
+
+        this._modal.next(true);
+    }
+
+    public closeModal() {
+        this._modal.next(false);
     }
 
 }

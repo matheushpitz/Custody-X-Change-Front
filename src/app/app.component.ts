@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CalendarTranslateService } from './components/calendar/services/calendar-translate.service';
+import { MultiLanguageCalendarTranslate } from './services/multi-language-calendar-translate.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'custody-x-change-front';
+  constructor(
+    private language: CalendarTranslateService
+  ) {
+
+  }
+
+  public switchLanguage() {
+    (this.language as MultiLanguageCalendarTranslate).switchLanguage();
+  }
 }

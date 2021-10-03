@@ -1,0 +1,12 @@
+<div class="modal-background">
+    <div class="modal-content">        
+        <div class="modal-header">
+            <span class="modal-title">{{title}}</span>
+            <a class="close-link" (click)="closeModal()">X</a>
+        </div>
+        <div class="modal-body">
+            <span class="calendar-event" *ngFor="let event of events">{{event.title}}</span>
+            <span *ngIf="events.length === 0">{{noEvents}}</span>
+        </div>
+    </div>
+</div>

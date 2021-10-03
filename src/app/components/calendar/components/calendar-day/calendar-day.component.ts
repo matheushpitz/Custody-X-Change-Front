@@ -1,8 +1,6 @@
 import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { NumberUtils } from 'src/app/utils/number.utils';
 import { ICalendarEvent } from '../../interfaces/event.interface';
 import { CalendarTranslateService } from '../../services/calendar-translate.service';
-import { CalendarService } from '../../services/calendar.service';
 import { DateUtils } from 'src/app/utils/date.utils';
 
 @Component({
@@ -19,8 +17,7 @@ export class CalendarDayComponent {
     @ViewChild('calendarDay') calendarDay: ElementRef;
     @ViewChild('header') header: ElementRef;
 
-    constructor(
-        private calendarService: CalendarService,
+    constructor(        
         private calendarTranslate: CalendarTranslateService,
         private cdr: ChangeDetectorRef
     ) {
@@ -62,7 +59,7 @@ export class CalendarDayComponent {
         if(this.events.length > maxShownEvents) {
             const e = this.events.slice(0, maxShownEvents);
             e.push({
-                title: `${this.events.length - maxShownEvents} more...`,
+                title: `${this.events.length - maxShownEvents} ${this.calendarTranslate.getTranslation('more-events')}`,
                 date: new Date(this.date)
             });
 

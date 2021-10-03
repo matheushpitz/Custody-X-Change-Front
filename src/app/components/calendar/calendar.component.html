@@ -1,7 +1,7 @@
 <div class="calendar-header">
-    <button (click)="previous()" class="btn btn-primary">Previous</button>
+    <button (click)="previous()" class="btn btn-primary">{{previousText}}</button>
     <span class="calendar-header-title">{{getTitle(currentDate$ | async)}}</span>
-    <button (click)="next()" class="btn btn-primary">Next</button>    
+    <button (click)="next()" class="btn btn-primary">{{nextText}}</button>    
 </div>
 <div class="col-12 calendar">
     <app-calendar-day 
@@ -9,6 +9,8 @@
         [showDay]="idx < 7" 
         [events]="getEventsByDate(date)" 
         [height]="100 / ((dates$ | async).length / 7)" 
+        (click)="click(date)"
         *ngFor="let date of (dates$ | async); let idx = index;">
     </app-calendar-day>
+    <app-calendar-details-modal *ngIf="modal$ | async" [date]="detailedDate" [events]="getEventsByDate(detailedDate)" (close)="closeModal()"></app-calendar-details-modal>
 </div>

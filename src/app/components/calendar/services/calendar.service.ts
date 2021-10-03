@@ -22,8 +22,7 @@ export class CalendarService implements OnDestroy {
         this.dates$ = this._calendarDates.asObservable();
         this.currentDate$ = this._currentDate.asObservable();
 
-        this._currentDate.pipe(takeUntil(this._destroy.asObservable())).subscribe(this.loadCalendarDays.bind(this));
-        this._calendarDates.subscribe(x => console.log(x));
+        this._currentDate.pipe(takeUntil(this._destroy.asObservable())).subscribe(this.loadCalendarDays.bind(this));        
     }    
     ngOnDestroy(): void {
         this._destroy.next();

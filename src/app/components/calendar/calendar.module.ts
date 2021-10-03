@@ -4,12 +4,14 @@ import { CalendarDayComponent } from './components/calendar-day/calendar-day.com
 import { CommonModule } from '@angular/common';
 import { CalendarTranslateService } from './services/calendar-translate.service';
 import { CalendarEventComponent } from './components/calendar-event/calendar-event.component';
+import { CalendarDetailsModal } from './components/calendar-details-modal/calendar-details-modal.component';
 
 @NgModule({
     declarations: [
         CalendarComponent,
         CalendarDayComponent,
-        CalendarEventComponent
+        CalendarEventComponent,
+        CalendarDetailsModal
     ],
     imports: [
         CommonModule
